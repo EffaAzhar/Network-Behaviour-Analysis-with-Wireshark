@@ -37,7 +37,9 @@ wireshark
 ```
 
 After installation, Wireshark successfully detected available network interfaces and was ready to begin packet capture.
+![Lab Environment](../screenshots/01-lab-environment.png)
 
+*Figure 1: Wireshark running on Ubuntu Linux after successful installation.*
 
 ## Lab Preparation
 
