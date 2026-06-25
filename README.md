@@ -4,6 +4,35 @@
 
 This project explores network traffic analysis using Wireshark in a controlled Ubuntu Linux laboratory environment. The objective is to develop practical skills in packet capture, protocol analysis and network behaviour observation. The project focuses on understanding how common network protocols operate and how network traffic can be inspected to improve visibility into system communications.
 
+## How a Secure Web Connection is Established
+
+This project follows the sequence of protocols involved when accessing a secure website. Rather than analysing isolated packets, each chapter examines one stage of the communication process and explains how it contributes to establishing a secure network connection.
+
+```text
+User enters https://google.com
+           │
+           ▼
+DNS
+Resolve the domain name to an IP address
+           │
+           ▼
+TCP Three-Way Handshake
+Establish a reliable connection
+           │
+           ▼
+TLS Handshake
+Negotiate encryption and authenticate the server
+           │
+           ▼
+HTTPS Request
+Request the webpage securely
+           │
+           ▼
+HTTPS Response
+Receive the encrypted webpage
+```
+
+The following chapters analyse each stage of this process using packet captures collected with Wireshark.
 
 ## Learning Objectives
 
