@@ -84,6 +84,9 @@ When the command does the following:
 3. Google responds with an ICMP Echo Reply.
 4. The round-trip time is measured and displayed.
 
+![Ping Command](../screenshots/02-ping-command-terminal.png)
+
+*Figure 1: Executing the `ping google.com` command to generate ICMP network traffic for packet capture.*
 ## Stopping a Capture
 
 To stop packet collection:
