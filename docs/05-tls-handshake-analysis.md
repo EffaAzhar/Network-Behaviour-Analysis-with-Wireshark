@@ -255,5 +255,5 @@ This demonstrates the effectiveness of TLS encryption.
 
 # Conclusion
 
-This analysis demonstrated how TLS transforms a reliable TCP connection into a secure HTTPS session. By authenticating the server, negotiating cryptographic parameters, and establishing a shared session key, TLS protects the confidentiality and integrity of modern web communications. Organising the handshake into three logical phases—Identity Verification, Key Negotiation, and Secure Communication—provides a clearer understanding of how encrypted connections are established than simply memorising individual packet names.
+This analysis demonstrated how TLS transforms a reliable TCP connection into a secure HTTPS session. By authenticating the server, negotiating cryptographic parameters and establishing a shared session key, TLS protects the confidentiality and integrity of modern web communications. Organising the handshake into three logical phases Identity Verification, Key Negotiation and Secure Communication provides a clearer understanding of how encrypted connections are established than simply memorising individual packet names.
 
