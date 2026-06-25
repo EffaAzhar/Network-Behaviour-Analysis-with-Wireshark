@@ -2,6 +2,35 @@
 
 The objective of this exercise is to understand how TCP establishes a reliable connection before any application data is exchanged. Using Wireshark, the TCP three-way handshake was captured and analysed to observe how a client and server initiate, maintain and terminate a network connection.
 
+## How a Secure Web Connection is Established
+
+When a user visits a secure website such as `https://google.com`, several networking protocols work together before the webpage is displayed. Each protocol performs a specific task and depends on the previous step completing successfully.
+
+```text
+User enters https://google.com
+           │
+           ▼
+DNS
+Resolve the domain name to an IP address
+           │
+           ▼
+TCP Three-Way Handshake
+Establish a reliable connection
+           │
+           ▼
+TLS Handshake
+Negotiate encryption and authenticate the server
+           │
+           ▼
+HTTPS Request
+Request the webpage securely over the encrypted connection
+           │
+           ▼
+HTTPS Response
+Receive the encrypted webpage from the server
+```
+
+This project examines each stage of the communication process individually. Understanding how these protocols interact provides a foundation for analysing network traffic and recognising normal communication patterns in Wireshark.
 
 ## What is TCP?
 
