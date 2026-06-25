@@ -77,7 +77,6 @@ Port **443** is the standard port used for HTTPS traffic.
 
 Using this filter allows both the TCP connection and the subsequent TLS handshake to be observed within the same conversation.
 
-
 ## TLS Handshake Capture
 
 ![TLS Handshake Analysis](../screenshots/07-tls-handshake-analysis.png)
@@ -159,9 +158,7 @@ This prevents clients from **unknowingly communicating with malicious servers.**
 ## Phase 2 — Key Negotiation
 
 Once the server has been authenticated, both systems negotiate a shared secret that will be used for encryption.
-
 Packets observed:
-
 ```text
 Server Key Exchange
 
@@ -203,7 +200,6 @@ Encrypted Handshake Message
 
 Application Data
 ```
-
 ### Change Cipher Spec
 
 Both systems notify each other that all future communication will use the negotiated encryption settings.
@@ -220,9 +216,6 @@ Once the handshake completes, all web traffic becomes encrypted. Wireshark can s
 * Packet sizes
 * Timing information
 However the webpage contents remain encrypted.
-
-
-
 
 # What Can Wireshark See?
 
@@ -247,10 +240,8 @@ Instead, encrypted packets simply appear as:
 ```text
 Application Data
 ```
-
 This demonstrates the effectiveness of TLS encryption.
 
----
 
 # Key Observations
 
@@ -261,7 +252,6 @@ This demonstrates the effectiveness of TLS encryption.
 * All subsequent HTTPS communication appears as encrypted application data.
 * The capture demonstrates the major phases of a TLS 1.2 handshake while also illustrating concepts that remain relevant to TLS 1.3.
 
----
 
 # Conclusion
 
