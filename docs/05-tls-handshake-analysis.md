@@ -104,6 +104,10 @@ The packet capture in this lab primarily demonstrates **TLS 1.2**, although mode
 
 TLS handshake can be understood as three logical phases.
 
+![TLS Handshake Analysis](../screenshots/08-tls-handshake-analysis.png)
+
+*Figure 2: TLS handshake captured in Wireshark using the **`tls`** display filter. The capture shows the transition from identity verification to key negotiation and finally encrypted application data.*
+
 ## Phase 1 — Identity Verification
 
 The purpose of this phase is to identify the server and agree on how secure communication will occur.
@@ -218,9 +222,7 @@ Once the handshake completes, all web traffic becomes encrypted. Wireshark can s
 However the webpage contents remain encrypted.
 
 
-# Wireshark Capture
 
-*Figure 1: TLS handshake captured in Wireshark using the **`tls`** display filter. The capture shows the transition from identity verification to key negotiation and finally encrypted application data.*
 
 # What Can Wireshark See?
 
