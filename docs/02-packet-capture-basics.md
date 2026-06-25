@@ -87,14 +87,32 @@ When the command does the following:
 ![Ping Command](../screenshots/02-ping-command-terminal.png)
 
 *Figure 1: Executing the `ping google.com` command to generate ICMP network traffic for packet capture.*
-## Stopping a Capture
+### Observations
+* The terminal output confirms that:
+* The domain google.com was successfully resolved to an IP address.
+* 35 ICMP packets were transmitted and received.
+* No packet loss occurred.
+* The average round-trip time was approximately 27 ms, indicating successful network connectivity.
 
-To stop packet collection:
+## Capturing Network Traffic
 
-1. Select the **Stop Capture** button.
-2. Review the captured traffic.
+While the `ping` command was running  Wireshark captured the generated network traffic on the active network interface. To stop network traffic capture red square button on the left side is selected.
 
-Captured packets remain available for analysis even after the capture has stopped.
+![Packet Capture Overview](../screenshots/03-packet-capture-overview.png)
+
+*Figure 2: Wireshark capturing live network traffic generated during the ping operation.*
+
+### Observations
+
+Several protocols can be observed in the capture:
+
+- **DNS** packets resolve `google.com` into its IP address before communication begins.
+- **ICMP Echo Request** packets are sent from the Ubuntu virtual machine to Google's server.
+- **ICMP Echo Reply** packets are returned by Google's server, confirming successful communication.
+- Additional background traffic, including **NTP** and **ARP**, is also visible because Wireshark captures all traffic passing through the selected network interface.
+
+This demonstrates that Wireshark records both the requested test traffic and other normal network activity occurring on the system.
+
 ## Saving Packet Captures
 
 Packet captures can be saved for future analysis.
@@ -113,33 +131,7 @@ pcaps/icmp.pcapng
 
 Saving captures allows network traffic to be reviewed without generating new packets.
 
-
-## Screenshot
-
-Insert a screenshot showing:
-
-* Active packet capture
-* Packet List Pane
-* Packet Details Pane
-* Packet Bytes Pane
-
-Example:
-
-```text
-screenshots/02-packet-capture-overview.png
-```
-
-
-## Key Observations
-
-* Packet capture records network traffic travelling through a selected network interface.
-* Network interfaces act as the communication points between the computer and the network.
-* Wireshark displays captured traffic in real time.
-* The `ping` command generates ICMP traffic that is easy to identify and analyse.
-* Captured traffic can be saved for future investigation using the `.pcapng` file format.
-
-
 ## Conclusion
 
-This exercise introduced the basic concepts required for network traffic analysis using Wireshark. Understanding network interfaces, packet capture, and the generation of test traffic provides the foundation for analysing protocols such as ICMP, DNS, TCP, HTTP, and HTTPS in subsequent sections of this project.
+This introduced the basic concepts required for network traffic analysis using Wireshark. Understanding network interfaces, packet capture and the generation of test traffic provides the foundation for analysing protocols such as ICMP, DNS, TCP, HTTP and HTTPS in subsequent sections of this project.
 
