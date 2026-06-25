@@ -6,8 +6,7 @@ This project explores network traffic analysis using Wireshark in a controlled U
 
 ## How a Secure Web Connection is Established
 
-This project follows the sequence of protocols involved when accessing a secure website. Rather than analysing isolated packets, each chapter examines one stage of the communication process and explains how it contributes to establishing a secure network connection.
-
+This project analyses the network behaviour observed when accessing a secure website. Each chapter uses Wireshark to examine one stage of the communication process, from DNS name resolution through TCP connection establishment, TLS encryption, and secure web communication.
 ```text
 User enters https://google.com
            │
