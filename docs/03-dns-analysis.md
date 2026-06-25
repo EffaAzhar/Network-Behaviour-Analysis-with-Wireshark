@@ -136,6 +136,9 @@ This response contains IPv6 addresses associated with `google.com`.
 | AAAA        | Resolves a domain name to an IPv6 address |
 
 Both record types were observed in this lab.
+*Why Both IPv4 and IPv6?*
+
+Modern systems often request both IPv4 (A) and IPv6 (AAAA) DNS records. This allows the operating system to use the most appropriate network protocol supported by both the client and the destination server. In this lab, google.com returned both IPv4 and IPv6 addresses because it supports dual-stack networking.
 
 ## Key Observations
 
