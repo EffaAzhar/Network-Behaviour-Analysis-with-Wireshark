@@ -22,7 +22,7 @@ Display Filter used:
 ```text
 http
 ```
-![HTTP Filter](screenshots/09-http-filter.png)
+![HTTP Filter](../screenshots/09-http-filter.png)
 
 **Figure 9:** HTTP packets captured using the `http` display filter.
 
@@ -61,7 +61,7 @@ Right Click Packet
 → Follow
 → HTTP Stream
 ```
-![HTTP Stream](screenshots/10-http-stream.png)
+![HTTP Stream](../screenshots/10-http-stream.png)
 
 **Figure 10:** Complete HTTP conversation reconstructed using Wireshark.
 
@@ -108,7 +108,7 @@ Display Filter:
 ```text
 tcp.stream eq 1
 ```
-![HTTP Conversation](screenshots/11-http-conversation.png)
+![HTTP Conversation](../screenshots/11-http-conversation.png)
 
 **Figure 11:** TCP conversation corresponding to the captured HTTP request.
 
@@ -148,7 +148,7 @@ Display Filter:
 ```text
 tcp.port == 443
 ```
-![HTTPS Filter](screenshots/12-https-filter.png)
+![HTTPS Filter](../screenshots/12-https-filter.png)
 
 **Figure 12:** HTTPS traffic captured over TCP Port 443.
 
@@ -195,7 +195,7 @@ Right Click Packet
 → TLS Stream
 ```
 
-![TLS Stream](screenshots/13-https-stream.png)
+![TLS Stream](../screenshots/13-https-stream.png)
 
 **Figure 13:** Following the TLS stream.
 
@@ -214,7 +214,7 @@ Display Filter:
 ```text
 tls.stream eq 0
 ```
-![HTTPS Conversation](screenshots/14-https-conversation.png)
+![HTTPS Conversation](../screenshots/14-https-conversation.png)
 
 **Figure 14:** Complete HTTPS communication showing the TLS handshake followed by encrypted application data.
 
