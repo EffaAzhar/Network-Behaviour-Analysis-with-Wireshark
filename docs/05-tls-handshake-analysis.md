@@ -104,7 +104,7 @@ The packet capture in this lab primarily demonstrates **TLS 1.2**, although mode
 
 TLS handshake can be understood as three logical phases.
 
-![TLS Handshake Analysis](../screenshots/08-tls-handshake-analysis.png)
+![TLS Handshake Analysis](../screenshots/07-tls-handshake-analysis.png)
 
 *Figure 2: TLS handshake captured in Wireshark using the **`tls`** display filter. The capture shows the transition from identity verification to key negotiation and finally encrypted application data.*
 
