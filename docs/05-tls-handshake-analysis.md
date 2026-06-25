@@ -84,103 +84,184 @@ Using this filter allows both the TCP connection and the subsequent TLS handshak
 
 *Figure 1: Wireshark capture showing the transition from TCP connection establishment to the TLS handshake and encrypted HTTPS communication.*
 
-## Analysing the TLS Handshake
+# TLS Handshake Analysis
+Unlike TCP, which always consists of **three packets**, the TLS handshake contains multiple messages.
+The exact sequence depends on TLS version, cipher suite, key exchange algorithm and session resumption
+The capture analysed in this lab primarily demonstrates a **TLS 1.2** handshake.
+### TLS 1.2 vs TLS 1.3
+The packet capture in this lab primarily demonstrates **TLS 1.2**, although modern browsers also establish **TLS 1.3** connections where supported. TLS 1.3 reduces latency and improves security by simplifying the handshake and encrypting more of the negotiation process.
 
-The packet capture demonstrates the sequence of events required to establish secure communication.
+| TLS 1.2                                     | TLS 1.3                           |
+| ------------------------------------------- | --------------------------------- |
+| More handshake messages                     | Fewer handshake messages          |
+| Slower connection establishment             | Faster connection establishment   |
+| Separate Server Key Exchange message        | Simplified key exchange           |
+| More visible handshake packets in Wireshark | More encrypted handshake messages |
+| Still widely supported                      | Recommended modern standard       |
 
-### TCP Connection
 
-The communication begins with the TCP Three-Way Handshake. This establishes a reliable transport channel between the client and the remote server. Only after TCP has successfully established the connection does the TLS handshake begin.
+# TLS Handshake Phases
+
+TLS handshake can be understood as three logical phases.
+
+## Phase 1 — Identity Verification
+
+The purpose of this phase is to identify the server and agree on how secure communication will occur.
+
+Packets observed:
+
+```text
+Client Hello
+
+↓
+
+Server Hello
+
+↓
+
+Certificate
+```
 
 ### Client Hello
 
-The client initiates the TLS handshake by sending a **Client Hello** message.
-The Client Hello contains information such as:
+The client initiates the TLS handshake by sending:
 * Supported TLS versions
 * Supported cipher suites
-* Random values used during key generation
-* Server Name Indication (SNI). The SNI extension identifies the hostname the client wishes to access.
+* Random values
+* Server Name Indication (SNI)
+Example observed in Wireshark:
 
+```text
+Client Hello
+(SNI=content-signature-2.cdn.mozilla.net)
+```
 ### Server Hello
 
-The server responds with a **Server Hello** message.
+The server selects:
+* TLS version
+* Cipher suite
+* Cryptographic algorithms
+and sends them back to the client.
 
-This message selects:
-* The TLS version
-* The cipher suite
-* Cryptographic parameters used during the session
-This response indicates that the server is willing to establish a secure connection.
+### Certificate
 
-### Digital Certificate
+The server presents its digital certificate.
+The client validates:
+* Server identity
+* Certificate Authority (CA)
+* Certificate validity
+This prevents clients from **unknowingly communicating with malicious servers.**
 
-The server then sends its digital certificate. This authentication process is one of the key security features provided by TLS. The certificate allows the client to:
+## Phase 2 — Key Negotiation
 
-* Verify the server's identity
-* Confirm that the certificate was issued by a trusted Certificate Authority (CA)
-* Reduce the risk of communicating with an impersonated server
+Once the server has been authenticated, both systems negotiate a shared secret that will be used for encryption.
 
+Packets observed:
+
+```text
+Server Key Exchange
+
+↓
+
+Server Hello Done
+
+↓
+
+Client Key Exchange
+```
+
+### Server Key Exchange
+
+The server sends cryptographic information required for generating the shared session key.
+
+### Server Hello Done
+
+This message indicates that the server has completed its part of the negotiation.
 
 ### Client Key Exchange
 
-After validating the certificate, the client sends a **Client Key Exchange** message. This exchange allows both the client and server to derive a shared session key. The session key is used for encrypting all subsequent communication.
+The client sends information that allows both devices to derive the same session key independently. The session key itself is never transmitted across the network.
+
+## Phase 3 — Secure Communication
+
+Once both systems possess the same session key, encrypted communication begins.
+
+Packets observed:
+
+```text
+Change Cipher Spec
+
+↓
+
+Encrypted Handshake Message
+
+↓
+
+Application Data
+```
 
 ### Change Cipher Spec
 
-Both devices exchange **Change Cipher Spec** messages. These messages indicate that future communication will use the negotiated encryption settings.
+Both systems notify each other that all future communication will use the negotiated encryption settings.
 
 ### Encrypted Handshake Message
 
-Once encryption has been enabled, the remaining handshake messages are transmitted in encrypted form. This confirms that both systems have successfully negotiated the secure session.
+The remaining handshake messages are transmitted in encrypted form. This confirms that both systems successfully negotiated identical encryption parameters.
 
-### Encrypted Application Data
+### Application Data
 
-After the TLS handshake is complete, the client and server begin exchanging encrypted application data.
+Once the handshake completes, all web traffic becomes encrypted. Wireshark can still observe:
+* Source IP
+* Destination IP
+* Packet sizes
+* Timing information
+However the webpage contents remain encrypted.
 
-At this stage:
-* The webpage request is encrypted.
-* The webpage response is encrypted.
-* Wireshark can observe the packets but cannot read their contents without the appropriate session keys.
 
-## What Wireshark Can and Cannot See
+# Wireshark Capture
 
-Wireshark provides visibility into the TLS handshake because these messages are required to establish secure communication.
+*Figure 1: TLS handshake captured in Wireshark using the **`tls`** display filter. The capture shows the transition from identity verification to key negotiation and finally encrypted application data.*
 
-However, after encryption has been enabled:
+# What Can Wireshark See?
 
-Wireshark **can** observe:
+Before encryption begins, Wireshark can observe:
 
 * Client Hello
 * Server Hello
-* Certificate exchange
+* Certificate
+* Key Exchange
 * Change Cipher Spec
-* Packet sizes
-* Source and destination addresses
 
-Wireshark **cannot** normally observe:
+After encryption begins, Wireshark normally cannot read:
 
 * Usernames
 * Passwords
 * Webpage contents
 * Form submissions
-* Other encrypted application data
+* Sensitive application data
 
-This demonstrates the effectiveness of TLS in protecting sensitive information.
+Instead, encrypted packets simply appear as:
 
----
+```text
+Application Data
+```
 
-## Key Observations
-
-* TLS operates after the TCP connection has been established.
-* The Client Hello initiated the TLS negotiation.
-* The server responded with a Server Hello and digital certificate.
-* Both systems negotiated a shared session key.
-* Encryption was enabled using the Change Cipher Spec messages.
-* Subsequent HTTPS communication appeared as encrypted application data.
-* Filtering on `tcp.port == 443` allowed both the TCP connection and TLS handshake to be analysed together.
+This demonstrates the effectiveness of TLS encryption.
 
 ---
 
-## Conclusion
+# Key Observations
 
-This analysis demonstrated how TLS establishes secure communication following the TCP Three-Way Handshake. By negotiating encryption parameters, authenticating the server, and creating a shared session key, TLS protects the confidentiality and integrity of web traffic. The Wireshark capture illustrates the transition from an unencrypted TCP connection to encrypted HTTPS communication, highlighting the role of TLS in securing modern Internet communications.
+* TLS begins only after TCP successfully establishes a connection.
+* The handshake authenticates the server using digital certificates.
+* A shared session key is negotiated without transmitting the key itself.
+* Encryption begins after the Change Cipher Spec messages.
+* All subsequent HTTPS communication appears as encrypted application data.
+* The capture demonstrates the major phases of a TLS 1.2 handshake while also illustrating concepts that remain relevant to TLS 1.3.
+
+---
+
+# Conclusion
+
+This analysis demonstrated how TLS transforms a reliable TCP connection into a secure HTTPS session. By authenticating the server, negotiating cryptographic parameters, and establishing a shared session key, TLS protects the confidentiality and integrity of modern web communications. Organising the handshake into three logical phases—Identity Verification, Key Negotiation, and Secure Communication—provides a clearer understanding of how encrypted connections are established than simply memorising individual packet names.
 
