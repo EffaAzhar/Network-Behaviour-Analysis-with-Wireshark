@@ -214,3 +214,95 @@ This behaviour confirms that the network itself was functioning correctly and th
 - TCP Reset (RST) identification.
 - Understanding failed TCP connection establishment.
 - Correlating terminal output with packet capture evidence.
+
+# Investigation 3 – Measuring Network Latency with ICMP
+
+## Objective
+
+This investigation demonstrates how Wireshark can be used to measure **network latency** by analysing ICMP Echo Requests and Echo Replies generated using the Linux `ping` utility.
+Unlike previous investigations that focused on failures, this investigation examines normal network performance by measuring the **Round-Trip Time (RTT)** between the local Ubuntu virtual machine and an external host.
+
+## What is Network Latency?
+
+Network latency is the **time required for data to travel from one device to another and back again.** For ICMP traffic, this value is called the **Round-Trip Time (RTT)**.
+Latency is one of the most important network performance metrics because even a healthy network with no packet loss may still feel slow if latency is high.
+Typical causes of high latency include:
+
+- Network congestion
+- Long routing paths
+- Wi-Fi interference
+- VPN overhead
+- Busy servers
+- ISP routing issues
+
+## Generating ICMP Traffic
+
+Wireshark was started before generating network traffic.
+
+The following command was executed:
+
+```bash
+ping google.com
+```
+
+
+### Analysing the Packet Capture
+
+The following display filter was applied in Wireshark:
+
+```text
+icmp
+```
+
+![ICMP Conversation](../screenshots/41-icmp-overview.png)
+
+Each Echo Request generated a matching Echo Reply, allowing Wireshark to calculate the response time between the two packets.
+
+### Echo Request Analysis
+
+Selecting an ICMP Echo Request reveals several important fields.
+
+![ICMP Echo Request](../screenshots/42-icmp-echo-request.png)
+
+The packet contains:
+
+- Source IP address
+- Destination IP address
+- ICMP Identifier
+- Sequence Number
+- Timestamp
+- Payload data
+
+The Identifier and Sequence Number uniquely identify each request so that the reply can be matched correctly.
+
+
+### Echo Reply Analysis
+
+The corresponding Echo Reply confirms that the destination host successfully responded.
+
+![ICMP Echo Reply](../screenshots/43-icmp-echo-reply.png)
+
+The reply contains the same:
+- Identifier
+- Sequence Number
+- Payload
+
+Wireshark also calculates the **response time between the request and reply.** In this lab the measured response time was approximately **22 ms**, which closely matches the latency reported by the Linux `ping` command.
+
+## Findings
+
+This investigation demonstrates how Wireshark can be used to measure network performance using ICMP traffic. The packet capture confirmed that:
+- Every Echo Request received a matching Echo Reply.
+- No packets were lost.
+- Response times remained between approximately **22–36 ms**.
+- The network connection was stable and responsive.
+
+## Key Learning
+
+ICMP is widely used during network troubleshooting because it provides valuable information about connectivity and performance. By analysing Echo Requests and Echo Replies, network analysts can determine:
+- Host availability
+- Round-Trip Time (RTT)
+- Network latency
+- Packet loss
+- Overall network responsiveness
+Wireshark makes it possible to visualise these exchanges and verify the latency measurements reported by diagnostic tools such as `ping`.
