@@ -1,6 +1,6 @@
 # Network Troubleshooting
 
-## Investigation 1 : Local DNS Resolver Failure
+# Investigation 1 : Local DNS Resolver Failure
 
 ### Objective
 
