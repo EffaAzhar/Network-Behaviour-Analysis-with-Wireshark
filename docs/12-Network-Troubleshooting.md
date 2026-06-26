@@ -97,3 +97,120 @@ The DNS failure was caused by disabling the local DNS resolver service. Without 
 * Determined that the failure occurred because the local DNS resolver service was unavailable.
 * Demonstrated how Wireshark can be used to identify the root cause of hostname resolution failures.
 
+# Investigation 2 – Connection Refused (TCP Reset)
+
+## Objective
+
+This investigation demonstrates how Wireshark can be used to diagnose a TCP connection failure caused by **attempting to connect to a closed port.** The objective was to understand how TCP behaves when a client requests a service that is not running and how this behaviour appears within a packet capture.
+
+## What is a TCP Reset (RST)?
+
+TCP uses a **Reset (RST)** flag to immediately terminate or reject a connection. Unlike a normal TCP connection, which is established using the Three Way Handshake (SYN → SYN-ACK → ACK), a TCP Reset indicates that the requested connection cannot be established.
+A TCP RST is typically sent when:
+- No application is listening on the requested port.
+- A service has unexpectedly closed the connection.
+- The operating system rejects the incoming connection.
+- A firewall or security device actively refuses the connection.
+
+In this investigation, no service was listening on **TCP port 8080**, so the operating system immediately rejected the connection by returning a TCP Reset (RST) packet.
+
+## Practical Demonstration
+
+To verify that no application was listening on TCP port **8080**, the currently listening ports were first inspected using:
+
+```bash
+ss -tuln
+```
+
+The output confirmed that port **8080** was not present in the list of active services.
+
+An attempt was then made to establish a TCP connection using:
+
+```bash
+telnet localhost 8080
+```
+
+The connection immediately failed with the message:
+
+```text
+Unable to connect to remote host: Connection refused
+```
+
+The screenshot below shows the listening services together with the failed connection attempt.
+
+![Terminal Connection Refused](../screenshots/39-terminal-connection-refused.png)
+
+
+## Packet Capture Analysis
+
+After starting packet capture in Wireshark, the failed connection attempt generated only two TCP packets.
+
+```
+Client                    Server
+
+SYN  -------------------->
+
+      <------------------  RST, ACK
+```
+
+Unlike a successful TCP connection, the server never replied with a **SYN-ACK** because no application was listening on the requested port. Instead, the operating system immediately responded with a **Reset (RST)** packet, informing the client that the requested service was unavailable.
+
+The capture clearly shows the client sending a TCP SYN packet followed immediately by a TCP Reset (RST, ACK) response.
+
+![RST Packet Overview](../screenshots/38-rst-packet-overview.png)
+
+
+## TCP Flag Analysis
+
+Inspecting the returned packet reveals the TCP Flags field.
+
+```
+Flags: 0x014 (RST, ACK)
+
+Acknowledgment: Set
+Reset: Set
+```
+
+The **Reset (RST)** flag is the key indicator that the operating system actively rejected the connection request rather than silently ignoring it. The **Acknowledgment (ACK)** flag confirms that the server received the client's SYN packet before terminating the connection.
+
+![RST Flag Details](../screenshots/40-rst-flag-details.png)
+
+
+## Root Cause Analysis
+
+The packet capture shows that:
+
+- The client successfully reached the destination host.
+- The destination host received the SYN packet.
+- No service was listening on TCP port **8080**.
+- The operating system immediately generated a TCP Reset (RST) packet.
+- The connection was actively refused rather than timing out.
+
+This behaviour confirms that the network itself was functioning correctly and that the problem existed at the application layer because the requested service was unavailable.
+
+
+
+## Connection Refused vs Timeout
+
+| Connection Refused (RST) | Connection Timeout |
+|---------------------------|--------------------|
+| Host is reachable | Host may be unreachable |
+| TCP Reset (RST) returned | No response received |
+| Service is not listening | Packets are dropped or filtered |
+| Immediate failure | Connection eventually times out |
+
+## Key Findings
+
+- Successfully generated a TCP connection refused scenario.
+- Observed a TCP SYN packet followed immediately by a TCP Reset (RST).
+- Identified the TCP Reset flag in Wireshark.
+- Distinguished between a refused connection and a successful TCP handshake.
+- Demonstrated how Wireshark can be used to diagnose unavailable network services.
+
+## Skills Demonstrated
+
+- Network troubleshooting using Wireshark.
+- TCP packet analysis.
+- TCP Reset (RST) identification.
+- Understanding failed TCP connection establishment.
+- Correlating terminal output with packet capture evidence.
