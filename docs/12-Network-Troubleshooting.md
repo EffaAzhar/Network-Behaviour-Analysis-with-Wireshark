@@ -1,6 +1,6 @@
 # Network Troubleshooting
 
-## Scenario 1 – Local DNS Resolver Failure
+## Investigation 1 : Local DNS Resolver Failure
 
 ### Objective
 
@@ -97,7 +97,7 @@ The DNS failure was caused by disabling the local DNS resolver service. Without 
 * Determined that the failure occurred because the local DNS resolver service was unavailable.
 * Demonstrated how Wireshark can be used to identify the root cause of hostname resolution failures.
 
-# Investigation 2 – Connection Refused (TCP Reset)
+# Investigation 2 : Connection Refused (TCP Reset)
 
 ## Objective
 
