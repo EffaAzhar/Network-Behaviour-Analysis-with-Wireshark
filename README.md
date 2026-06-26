@@ -4,8 +4,18 @@
 
 This project explores network traffic analysis using **Wireshark** within a controlled Ubuntu Linux laboratory environment. The objective is to develop practical skills in packet capture, protocol analysis, network troubleshooting and behavioural observation through the inspection of real network traffic. The project progresses from analysing fundamental network protocols to investigating real world troubleshooting scenarios, providing hands-on experience in understanding how systems communicate across modern TCP/IP networks.
 Rather than focusing solely on protocol theory this repository demonstrates how Wireshark can be used to analyse packet level communication, troubleshoot connectivity issues and investigate network behaviour in practical cybersecurity scenarios.
+## Lab Environment
 
-# How a Secure Web Connection is Established
+| Component              | Details                                               |
+| ---------------------- | ----------------------------------------------------- |
+| Host System            | macOS                                                 |
+| Virtualisation         | UTM                                                   |
+| Guest Operating System | Ubuntu Linux                                          |
+| Network Analysis Tool  | Wireshark                                             |
+| Protocols Analysed     | DNS, TCP, TLS, HTTP, HTTPS, ARP, ICMP, DHCP, FTP, SSH |
+
+
+## How a Secure Web Connection is Established
 
 One of the core objectives of this project is understanding how multiple network protocols work together to establish a secure web connection. The communication process analysed throughout this repository is illustrated below.
 
@@ -35,7 +45,7 @@ Receive the encrypted webpage
 
 Each protocol involved in this communication process is analysed using real packet captures collected with Wireshark.
 
-# Learning Objectives
+## Learning Objectives
 
 * Capture and inspect live network traffic.
 * Analyse packet-level communication using Wireshark.
@@ -46,7 +56,7 @@ Each protocol involved in this communication process is analysed using real pack
 * Develop practical network troubleshooting skills.
 * Document packet analysis using a structured investigation methodology.
 
-# Technologies Used
+## Technologies Used
 
 * Ubuntu Linux
 * Wireshark
@@ -63,7 +73,7 @@ Each protocol involved in this communication process is analysed using real pack
 * SSH
 
 
-# Repository Structure
+## Repository Structure
 
 ```text
 Network-Behaviour-Analysis-with-Wireshark/
@@ -87,7 +97,7 @@ README.md
 screenshots/
 ```
 
-# Network Troubleshooting Investigations
+## Network Troubleshooting Investigations
 
 The repository also includes practical troubleshooting exercises demonstrating how Wireshark can be used to investigate common networking issues. Completed investigations are following
 
@@ -116,7 +126,7 @@ Identify Root Cause
 Document Findings
 ```
 
-# Skills Demonstrated
+## Skills Demonstrated
 
 * Network Traffic Analysis
 * Packet Capture
@@ -135,17 +145,34 @@ Document Findings
 * Cybersecurity Documentation
 * Network Visibility and Monitoring
 
-# Learning Outcomes
+## Learning Outcomes
 
 By completing this project I developed practical experience in:
 
 * Capturing and analysing live network traffic.
 * Understanding communication between common network protocols.
-* Interpreting packet-level behaviour using Wireshark.
-* Troubleshooting network connectivity and application-layer issues.
+* Interpreting packet level behaviour using Wireshark.
+* Troubleshooting network connectivity and application layer issues.
 * Investigating secure and insecure communication protocols.
 * Applying protocol analysis techniques commonly used by cybersecurity professionals.
 
-# Disclaimer
+## Disclaimer
 
 All packet captures and network activities were performed within a controlled laboratory environment for educational and research purposes. No unauthorised systems or production networks were analysed during this project.
+
+## Future Improvements
+Potential future enhancements include:
+- IPv6 traffic analysis
+- HTTP/2 and HTTP/3 analysis
+- DNS over HTTPS (DoH)
+- Network performance visualisation
+- Malware traffic analysis
+- Packet capture automation using Tshark
+
+# Author
+
+**Effa Azhar**
+
+Cybersecurity Research Portfolio
+
+GitHub: https://github.com/EffaAzhar
