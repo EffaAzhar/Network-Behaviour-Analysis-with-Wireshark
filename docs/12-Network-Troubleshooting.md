@@ -215,7 +215,7 @@ This behaviour confirms that the network itself was functioning correctly and th
 - Understanding failed TCP connection establishment.
 - Correlating terminal output with packet capture evidence.
 
-# Investigation 3 – Measuring Network Latency with ICMP
+# Investigation 3 : Measuring Network Latency with ICMP
 
 ## Objective
 
@@ -307,7 +307,7 @@ ICMP is widely used during network troubleshooting because it provides valuable 
 - Overall network responsiveness
 Wireshark makes it possible to visualise these exchanges and verify the latency measurements reported by diagnostic tools such as `ping`.
 
-# Investigation 4 – HTTP 404 Not Found
+# Investigation 4 : HTTP 404 Not Found
 
 ## Objective
 
