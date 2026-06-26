@@ -1,13 +1,6 @@
 # 08 – ICMP (Internet Control Message Protocol) Analysis
 
-## Overview
-
-The Internet Control Message Protocol (ICMP) is a network-layer protocol used for diagnostics, error reporting, and connectivity testing. Unlike TCP and UDP, ICMP does not transport application data. Instead, it allows network devices to verify whether another host is reachable and helps identify network problems.
-
-The most common ICMP utility is the `ping` command, which sends **Echo Request** messages and waits for **Echo Reply** messages from the destination.
-
----
-
+The Internet Control Message Protocol (ICMP) is a network layer protocol used for diagnostics, error reporting and connectivity testing. Unlike TCP and UDP, ICMP does not transport application data. Instead, it allows network devices to verify whether another host is reachable and helps **identify network problems.** The most common ICMP utility is the `ping` command, which sends **Echo Request** messages and waits for **Echo Reply** messages from the destination.
 # Objectives
 
 During this lab I aimed to:
@@ -18,8 +11,6 @@ During this lab I aimed to:
 * Examine important ICMP fields such as Identifier, Sequence Number, and Time To Live (TTL).
 * Understand how ICMP supports network diagnostics.
 
----
-
 # Lab Environment
 
 | Component        | Details             |
@@ -29,19 +20,15 @@ During this lab I aimed to:
 | Protocol         | ICMP                |
 | Test Command     | `ping 8.8.8.8 -c 4` |
 
----
 
 # Generating ICMP Traffic
 
-ICMP traffic was generated using the following command:
+ICMP traffic was generated using the following command, this command sends four ICMP Echo Request packets to Google's public DNS server (8.8.8.8). Each request expects an Echo Reply from the destination.
+
 
 ```bash
 ping 8.8.8.8 -c 4
 ```
-
-This command sends four ICMP Echo Request packets to Google's public DNS server (8.8.8.8). Each request expects an Echo Reply from the destination.
-
----
 
 # Wireshark Display Filter
 
@@ -51,61 +38,40 @@ The following display filter was applied:
 icmp
 ```
 
-This filter displays only ICMP packets captured during the session.
-
----
 
 # ICMP Conversation
 
-![ICMP Conversation](images/08-icmp-filter.png)
+![ICMP Conversation](../screenshots/18-icmp-filter.png)
 
-The capture shows four Echo Requests followed by four Echo Replies exchanged between the Ubuntu virtual machine and Google's public DNS server.
+The capture shows four Echo Requests followed by four Echo Replies exchanged between the Ubuntu virtual machine and Google's public DNS server. Each request has a corresponding reply, confirming successful communication between both hosts.
 
-Each request has a corresponding reply, confirming successful communication between both hosts.
-
----
 
 # Echo Request Analysis
 
-![Echo Request Details](images/08-icmp-echo-request-details.png)
+![Echo Request Details](../screenshots/19-icmp-echo-request-details.png)
 
-The Echo Request packet is transmitted from the local machine to the destination host.
-
-In this capture:
-
+The Echo Request packet is transmitted from the local machine to the destination host. The Echo Request asks the destination host whether it is reachable. In this capture,
 * Source IP Address: **192.168.64.4**
 * Destination IP Address: **8.8.8.8**
 * ICMP Message Type: **Echo Request**
 * TTL: **64**
 
-The Echo Request asks the destination host whether it is reachable.
-
----
 
 # Echo Reply Analysis
 
-![Echo Reply Details](images/08-icmp-echo-reply-details.png)
+![Echo Reply Details](../screenshots/20-icmp-echo-reply-details.png)
 
-The destination host responds with an Echo Reply after successfully receiving the request.
-
-Notice that the source and destination addresses are reversed compared to the Echo Request.
-
-In this capture:
-
+The destination host responds with an Echo Reply after successfully receiving the request. This confirms successful communication with the destination. The source and destination addresses are reversed compared to the Echo Request. In this capture,
 * Source IP Address: **8.8.8.8**
 * Destination IP Address: **192.168.64.4**
 * ICMP Message Type: **Echo Reply**
 * TTL: **118**
 
-This confirms successful communication with the destination.
-
----
-
 # Request and Reply Relationship
 
-![ICMP Request and Reply](images/08-icmp-request-reply.png)
+![ICMP Request and Reply](../screenshots/21-icmp-request-reply.png)
 
-Each Echo Request has a matching Echo Reply.
+Each Echo Request has a matching Echo Reply. Matching sequence numbers confirm that each transmitted packet was successfully returned by the destination.
 
 | Echo Request | Echo Reply |
 | ------------ | ---------- |
@@ -113,10 +79,6 @@ Each Echo Request has a matching Echo Reply.
 | Sequence 2   | Sequence 2 |
 | Sequence 3   | Sequence 3 |
 | Sequence 4   | Sequence 4 |
-
-Matching sequence numbers confirm that each transmitted packet was successfully returned by the destination.
-
----
 
 # Important ICMP Fields
 
