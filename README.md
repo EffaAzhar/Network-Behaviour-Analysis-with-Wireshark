@@ -2,11 +2,13 @@
 
 ## Project Overview
 
-This project explores network traffic analysis using Wireshark in a controlled Ubuntu Linux laboratory environment. The objective is to develop practical skills in packet capture, protocol analysis and network behaviour observation. The project focuses on understanding how common network protocols operate and how network traffic can be inspected to improve visibility into system communications.
+This project explores network traffic analysis using **Wireshark** within a controlled Ubuntu Linux laboratory environment. The objective is to develop practical skills in packet capture, protocol analysis, network troubleshooting and behavioural observation through the inspection of real network traffic. The project progresses from analysing fundamental network protocols to investigating real world troubleshooting scenarios, providing hands-on experience in understanding how systems communicate across modern TCP/IP networks.
+Rather than focusing solely on protocol theory this repository demonstrates how Wireshark can be used to analyse packet level communication, troubleshoot connectivity issues and investigate network behaviour in practical cybersecurity scenarios.
 
-## How a Secure Web Connection is Established
+# How a Secure Web Connection is Established
 
-This project analyses the network behaviour observed when accessing a secure website. Each chapter uses Wireshark to examine one stage of the communication process, from DNS name resolution through TCP connection establishment, TLS encryption, and secure web communication.
+One of the core objectives of this project is understanding how multiple network protocols work together to establish a secure web connection. The communication process analysed throughout this repository is illustrated below.
+
 ```text
 User enters https://google.com
            │
@@ -31,63 +33,119 @@ HTTPS Response
 Receive the encrypted webpage
 ```
 
-The following chapters analyse each stage of this process using packet captures collected with Wireshark.
+Each protocol involved in this communication process is analysed using real packet captures collected with Wireshark.
 
-## Learning Objectives
+# Learning Objectives
 
-* Capture and inspect network traffic
-* Analyse ICMP communications
-* Investigate DNS queries and responses
-* Understand the TCP three-way handshake
-* Compare HTTP and HTTPS traffic
-* Apply Wireshark display filters
-* Document normal network behaviour
+* Capture and inspect live network traffic.
+* Analyse packet-level communication using Wireshark.
+* Understand common network protocols and their interactions.
+* Examine secure and insecure communication protocols.
+* Investigate network connectivity and performance issues.
+* Apply Wireshark display filters to isolate specific traffic.
+* Develop practical network troubleshooting skills.
+* Document packet analysis using a structured investigation methodology.
 
-
-## Technologies Used
+# Technologies Used
 
 * Ubuntu Linux
 * Wireshark
 * TCP/IP Networking
 * DNS
+* TCP
+* TLS
 * HTTP
-* HTTPS/TLS
+* HTTPS
+* ARP
 * ICMP
+* DHCP
+* FTP
+* SSH
 
 
-## Repository Structure
+# Repository Structure
 
 ```text
 Network-Behaviour-Analysis-with-Wireshark/
 
 README.md
 
-docs/
-├── 01-lab-setup.md
-├── 02-packet-capture-basics.md
-├── 03-dns-analysis.md
-├── 04-tcp-three-way-handshake.md
-├── 05-http-vs-https-analysis.md
-├── 06-icmp-analysis.md
-├── 07-wireshark-filters.md
-├── 08-network-behaviour-analysis.md
-├── 09-findings-and-limitations.md
+01-wireshark-installation.md
+02-packet-capture-basics.md
+03-dns-analysis.md
+04-tcp-three-way-handshake.md
+05-tls-handshake.md
+06-http-vs-https.md
+07-arp-analysis.md
+08-icmp-analysis.md
+09-dhcp-analysis.md
+10-ftp-analysis.md
+11-ssh-analysis.md
+12-network-troubleshooting.md
+13-essential-wireshark-filters.md
 
 screenshots/
-
-pcaps/
 ```
 
-## Key Skills Demonstrated
+# Network Troubleshooting Investigations
 
-* Network traffic analysis
-* Packet inspection
-* Protocol analysis
-* Linux administration
-* Cybersecurity documentation
-* Network visibility and monitoring
+The repository also includes practical troubleshooting exercises demonstrating how Wireshark can be used to investigate common networking issues. Completed investigations are following
 
-## Disclaimer
+* DNS Resolution Failure
+* TCP Connection Refused (RST)
+* High Network Latency
+* HTTP 404 Not Found
+Each investigation follows a structured workflow:
 
-All traffic captures were performed within a controlled laboratory environment for educational and research purposes.
+```text
+Generate the Issue
+        │
+        ▼
+Capture Network Traffic
+        │
+        ▼
+Apply Wireshark Filters
+        │
+        ▼
+Analyse Packets
+        │
+        ▼
+Identify Root Cause
+        │
+        ▼
+Document Findings
+```
 
+# Skills Demonstrated
+
+* Network Traffic Analysis
+* Packet Capture
+* Packet Inspection
+* TCP/IP Analysis
+* DNS Analysis
+* TLS Handshake Analysis
+* HTTP/HTTPS Analysis
+* ARP Analysis
+* ICMP Analysis
+* DHCP Analysis
+* FTP Analysis
+* SSH Analysis
+* Network Troubleshooting
+* Linux Administration
+* Cybersecurity Documentation
+* Network Visibility and Monitoring
+
+# Learning Outcomes
+
+By completing this project I developed practical experience in:
+
+* Capturing and analysing live network traffic.
+* Understanding communication between common network protocols.
+* Interpreting packet-level behaviour using Wireshark.
+* Troubleshooting network connectivity and application-layer issues.
+* Investigating secure and insecure communication protocols.
+* Applying protocol analysis techniques commonly used by cybersecurity professionals.
+
+# Disclaimer
+
+All packet captures and network activities were performed within a controlled laboratory environment for educational and research purposes. No unauthorised systems or production networks were analysed during this project.
